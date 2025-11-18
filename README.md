@@ -57,24 +57,26 @@ Essa separação impede que um vazamento dos logs revele dados pessoais do aluno
 
 # 🗂️ Estrutura de Pastas do Repositório
 
+```text
 rfid-access-control/
 │
 ├── rfid-app/
-│ ├── config/
-│ ├── includes/
-│ └── public/
+│   ├── config/
+│   ├── includes/
+│   └── public/
 │
 ├── sql/
-│ ├── schema_students.sql
-│ ├── schema_tags.sql
-│ ├── test_data.sql
+│   ├── schema_students.sql
+│   ├── schema_tags.sql
+│   └── test_data.sql
 │
 ├── arduino/
-│ └── rfid_reader_ethernet/
-│ └── rfid_reader_ethernet.ino
+│   └── rfid_reader_ethernet/
+│       └── rfid_reader_ethernet.ino
 │
 ├── .gitignore
 └── README.md
+```
 
 
 ---
