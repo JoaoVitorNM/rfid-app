@@ -1,27 +1,81 @@
-# rfid-app
-Sistema de Controle de Acesso RFID
+# 📡 Sistema de Controle de Acesso RFID  
+**Arduino UNO R3 + RFID RC522 + Aplicação Web PHP + MariaDB**  
+**Desenvolvido por: João Vitor Nepomuceno Máximo**
+
+---
+
+## 📘 Sobre o Projeto
+Este projeto implementa um **sistema completo de controle de acesso por RFID**, utilizando:
+
+- **Arduino UNO R3**
+- **Módulo RFID-RC522**
+- **Etiquetas MIFARE Classic 1K**
+- **Aplicação Web em PHP**
+- **Banco de dados MariaDB**
+- **Segurança orientada à LGPD** (dados sensíveis separados dos UID RFID)
+
+O sistema permite:
+- Cadastro de alunos
+- Cadastro de etiquetas RFID
+- Dashboard administrativo
+- Registro automático de acessos via Arduino
+- Listagem completa com filtros (nome, matrícula, datas)
+- Logs armazenados em banco separado
+
+---
+
+# 🏗️ Arquitetura Geral
+
+[RFID Tag] --UID--> [Arduino + RC522] --HTTP--> [API PHP] --INSERT--> [rfid_tags.access_logs]
+
+                                 [Dashboard PHP] <-----> [rfid_students.students]
+                                                         [rfid_tags.tags]
+                                                         [rfid_tags.access_logs]
 
 
 ---
 
-## ⚠️ Segurança / Boas práticas (IMPORTANTE)
-- **NUNCA** comite suas credenciais de banco (`config/db.php` com usuário/senha) em repositórios públicos.
-- Use um arquivo `config/db.sample.php` ou `.env.example` no repo e configure `config/db.php` localmente (ou via variáveis de ambiente).
-- Se precisar armazenar imagens pesadas ou binários, use **Git LFS**.
+# 🔐 Segurança — Separação dos Bancos (LGPD)
+Para proteger dados sensíveis, a aplicação utiliza **dois bancos de dados independentes**:
+
+### 📘 Banco 1 → `rfid_students`
+Contém informações pessoais:
+- id
+- nome
+- matrícula
+- curso
+
+### 📗 Banco 2 → `rfid_tags`
+Contém apenas dados técnicos:
+- UID RFID
+- referência do aluno (ID numérico)
+- registros de acesso
+
+Essa separação impede que um vazamento dos logs revele dados pessoais do aluno.
 
 ---
 
-## ✅ Requisitos (ambiente de desenvolvimento)
-- Ubuntu 24.04 (ou similar)
-- Apache2, PHP (>=8.x), PHP mysqli extension
-- MariaDB (server + client)
-- Arduino IDE (ou PlatformIO) + suporte ESP32
-- Bibliotecas Arduino: `MFRC522`, `SPI` (ESP32 boards)
+# 🗂️ Estrutura de Pastas do Repositório
+
+rfid-access-control/
+│
+├── rfid-app/
+│ ├── config/
+│ ├── includes/
+│ └── public/
+│
+├── sql/
+│ ├── schema_students.sql
+│ ├── schema_tags.sql
+│ ├── test_data.sql
+│
+├── arduino/
+│ └── rfid_reader_ethernet/
+│ └── rfid_reader_ethernet.ino
+│
+├── .gitignore
+└── README.md
+
 
 ---
 
-## 🔧 Instalação (Servidor Linux — Ubuntu 24.04)
-1. Atualizar e instalar pacotes:
-```bash
-sudo apt update
-sudo apt install apache2 mariadb-server mariadb-client php libapache2-mod-php php-mysql unzip -y
