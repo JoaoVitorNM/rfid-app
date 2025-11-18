@@ -70,8 +70,7 @@ rfid-access-control/
 │   ├── schema_tags.sql
 │   └── test_data.sql
 │
-├── arduino/
-│   └── rfid_reader_ethernet/
+├── rfid_reader_ethernet/
 │       └── rfid_reader_ethernet.ino
 │
 ├── .gitignore
